@@ -11,9 +11,13 @@ def get():
         resp = urllib2.urlopen(request)
         data=json.loads(resp.read())
         for obj in data:
-            print(obj['clone_url'])
-            cmd= 'git clone '+obj['clone_url']+' data/'+obj['full_name']  ##需要先在此脚本同目录下创建data文件夹
-            os.system(cmd)
+            print('------'+obj['full_name']+'------')
+            if os.path.exists('data/'+obj['full_name']):
+                cmd='cd'+' data/'+obj['full_name']+"&& git pull && cd /xxx操作目录"
+            else:
+			    print(obj['clone_url'])
+			    cmd= 'cd /xxx操作目录/ && git clone '+obj['clone_url']+' data/'+obj['full_name']
+			os.system(cmd)
 
 if __name__ == "__main__":
     get()
